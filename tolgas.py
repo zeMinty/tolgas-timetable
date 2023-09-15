@@ -18,7 +18,7 @@ class tolgasAPI:
             'submit_button': '%D0%9F%D0%BE%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D1%8C'  # Показать
         }
 
-    def getTimetable(self, groupid:int, fromdate:str, todate:str):
+    def getTimetable(self, groupid: int, fromdate: str, todate: str):
         url = self.baseurl + self.timetablepath + '?id=0'
         params = self.params
         params['vr'] = groupid
@@ -41,9 +41,9 @@ class tolgasAPI:
         else:
             raise ValueError('Не удалось получить данные')
 
-    def _prepareTimetable(self, data:list):
-        trimmedData = list(map(lambda s:s.strip('\n '+"\t"), data))
-        filteredData = list(filter(lambda s: s!='', trimmedData))
+    def _prepareTimetable(self, data: list):
+        trimmedData = list(map(lambda s: s.strip('\n '+"\t"), data))
+        filteredData = list(filter(lambda s: s != '', trimmedData))
 
         out = {}
         step = 0

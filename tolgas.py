@@ -1,5 +1,6 @@
 from requests import post
 from parsel import Selector
+from re import match as matchRegex
 
 
 class tolgasAPI:
@@ -34,14 +35,48 @@ class tolgasAPI:
             html = Selector(response.text)
             data = html.xpath('//div[@id="send"]//text()').getall()
 
-            out = []
-            for s in data:
-                d = s.strip('\n '+"\t")
-                if d != '':
-                    out.append(d)
-            data = "\n".join(out)
+            data = self._prepareTimetable(data)
 
             return data
         else:
             raise ValueError('Не удалось получить данные')
 
+    def _prepareTimetable(self, data:list):
+        trimmedData = list(map(lambda s:s.strip('\n '+"\t"), data))
+        filteredData = list(filter(lambda s: s!='', trimmedData))
+
+        out = {}
+        step = 0
+        date = None
+        num = None
+        template = {
+            'fromtime': '?',
+            'totime': '?',
+            'name': '?',
+            'type': '?',
+            'auditory': '?',
+            'teacher': '?',
+            'groups': '?'
+        }
+        info = list(template.keys())
+        maxStep = len(info)-1
+        for i in filteredData:
+            if matchRegex(r'\d{2}\.\d{2}\.\d{4}', i):
+                date = i
+                out[date] = {}
+                continue
+
+            if matchRegex(r'^\d+$', i):
+                step = 0
+                num = i
+                out[date][num] = template.copy()
+                continue
+
+            out[date][num][info[step]] = i
+            print(i)
+
+            step += 1
+            if step > maxStep:
+                step = 0
+
+        return out

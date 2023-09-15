@@ -14,7 +14,7 @@ class tolgasAPI:
             'vr': 0,
             'from': 0,
             'to': 0,
-            'submit_button': '%D0%9F%D0%BE%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D1%8C'
+            'submit_button': '%D0%9F%D0%BE%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D1%8C' #Показать
         }
 
     def getTimetable(self, groupid=0, fromdate='02.10.2023', todate='08.10.2023'):

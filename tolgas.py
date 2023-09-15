@@ -1,11 +1,11 @@
 from requests import post
 from parsel import Selector
 
+
 class tolgasAPI:
     def __init__(self) -> None:
         self.baseurl = 'https://www.tolgas.ru/'
         self.timetablepath = 'services/raspisanie/'
-
         self.params = {
             'rel': 0,
             'grp': 0,
@@ -19,7 +19,16 @@ class tolgasAPI:
 
     def getTimetable(self, groupid=369, fromdate='02.10.2023', todate='08.10.2023'):
         url = self.baseurl + self.timetablepath + '?id=0'
-        response = post(url, data=self.params)
+        params = self.params
+        params['vr'] = groupid
+        params['from'] = fromdate
+        params['to'] = todate
+
+        try:
+            response = post(url, data=params)
+        except Exception as ex:
+            print(f'Не удалось выполнить запрос: {ex}')
+            return
 
         if response.status_code == 200:
             html = Selector(response.text)
@@ -32,10 +41,19 @@ class tolgasAPI:
                     out.append(d)
             data = "\n".join(out)
 
+            """
             if data is not None:
                 with open('data.txt', 'w') as f:
                     f.write(data)
+            """
 
-            print(data)
+            return data
         else:
             raise ValueError('Не удалось получить данные')
+
+def main():
+    tolgas = tolgasAPI()
+    print(str(tolgas.getTimetable())[:150])
+
+if __name__=='__main__':
+    main()

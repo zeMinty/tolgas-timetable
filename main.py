@@ -1,7 +1,8 @@
-from .tolgas import tolgasAPI
+from tolgas import tolgasAPI
 
 def main():
-    print('main')
+    tolgas = tolgasAPI()
+    print(tolgas.getTimetable())
 
 if __name__=='__main__':
     main()

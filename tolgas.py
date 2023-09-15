@@ -17,7 +17,7 @@ class tolgasAPI:
             'submit_button': '%D0%9F%D0%BE%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D1%8C'
         }
 
-    def getTimetable(self, groupid=369, fromdate='02.10.2023', todate='08.10.2023'):
+    def getTimetable(self, groupid=0, fromdate='02.10.2023', todate='08.10.2023'):
         url = self.baseurl + self.timetablepath + '?id=0'
         params = self.params
         params['vr'] = groupid

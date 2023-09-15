@@ -1,7 +1,6 @@
 from requests import post
 from parsel import Selector
 
-
 class tolgasAPI:
     def __init__(self) -> None:
         self.baseurl = 'https://www.tolgas.ru/'

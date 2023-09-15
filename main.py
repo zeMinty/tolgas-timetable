@@ -1,7 +1,7 @@
 from .tolgas import tolgasAPI
 
 def main():
-    pass
+    print('main')
 
 if __name__=='__main__':
     main()

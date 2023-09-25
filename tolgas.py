@@ -25,11 +25,7 @@ class tolgasAPI:
         params['from'] = fromdate
         params['to'] = todate
 
-        try:
-            response = post(url, data=params)
-        except Exception as ex:
-            print(f'Не удалось выполнить запрос: {ex}')
-            return
+        response = post(url, data=params)
 
         if response.status_code == 200:
             html = Selector(response.text)
@@ -73,7 +69,6 @@ class tolgasAPI:
                 continue
 
             out[date][num][info[step]] = i
-            print(i)
 
             step += 1
             if step > maxStep:

@@ -39,7 +39,7 @@ class tolgasAPI:
 
             return data
         else:
-            raise ValueError('Не удалось получить данные')
+            raise ValueError(f'Не удалось получить данные: status_code={response.status_code}')
 
     def _prepareTimetable(self, data: list):
         trimmedData = list(map(lambda s: s.strip('\n '+"\t"), data))

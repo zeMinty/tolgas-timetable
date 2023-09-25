@@ -1,5 +1,12 @@
+from datetime import datetime as dt
 # from tolgas import tolgasAPI
 from telebot import TeleBot
+import logging
+
+
+def _log(reason: str, message=None):
+    logging.info(f'Reason:{reason}; Message:{message}')
+    print(f'{dt.now()} ~ new log')
 
 
 def main() -> None:
@@ -7,6 +14,9 @@ def main() -> None:
     with open('token', 'r') as token:
         BOT_TOKEN = token.read()
 
+    # инициализации
+    logging.basicConfig(filename="logs.log",
+                        format="%(asctime)s - %(levelname)s: %(message)s")
     # tolgas = tolgasAPI()
     bot = TeleBot(BOT_TOKEN)
 
@@ -22,6 +32,11 @@ def main() -> None:
         bot.reply_to(
             message, "Бот в данный момент в разработке.\nСвязь с разработчиком: @Xpymka890")
 
+    @bot.message_handler(func=lambda message: True)
+    def makelog(message):
+        _log('Новое сообщение', message)
+
+    _log('Новый запуск')
     bot.polling()
 
 
